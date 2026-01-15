@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="DeepResearchEval: An automated framework for deep research task construction and agentic evaluation.">
+  <meta name="keywords" content="Deep Research, LLM Agents, Benchmark, Evaluation, Agentic Evaluation, Fact-Checking">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeepResearchEval: An Automated Framework for Deep Research Task Construction and Agentic Evaluation</title>
+
+  <!-- Google Analytics - Replace with your own tracking ID or remove -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-GA-ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'YOUR-GA-ID');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax for rendering math equations -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">DeepResearchEval: An Automated Framework for Deep Research Task
+              Construction and Agentic Evaluation</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                Yibo Wang<sup>1,2</sup>,</span>
+              <span class="author-block">
+                Lei Wang<sup>1&dagger;</sup>,</span>
+              <span class="author-block">
+                Yue Deng<sup>1</sup>,</span>
+              <span class="author-block">
+                Keming Wu<sup>1</sup>,</span>
+              <span class="author-block">
+                Yao Xiao<sup>1</sup>,</span>
+              <span class="author-block">
+                Huanjin Yao<sup>2</sup>,</span>
+              <span class="author-block">
+                Liwei Kang<sup>1</sup>,</span>
+              <span class="author-block">
+                Hai Ye<sup>1</sup>,</span>
+              <span class="author-block">
+                Yongcheng Jing<sup>2</sup>,</span>
+              <span class="author-block">
+                Lidong Bing<sup>1</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Infinity Lab, Shanda Group</span>
+              <span class="author-block"><sup>2</sup>Nanyang Technological University</span>
+            </div>
+
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">arXiv Preprint</span>
+            </div> -->
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="http://arxiv.org/abs/2601.09688" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Code Link (Coming Soon) -->
+                <span class="link-block">
+                  <a href="https://github.com/Infinity-AILab/DeepResearchEval"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Dataset Link (Coming Soon) -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/Infinity-AILab/DeepResearchEval"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Dataset</span>
+                  </a>
+                </span>
+                <!-- Submission Link -->
+                <span class="link-block">
+                  <a href="https://docs.google.com/document/d/1tWxvyePIYO-yGIrcPUdyHgCieWv322EGtVyLROZgY2M/edit?tab=t.0"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-alt"></i>
+                    </span>
+                    <span>Submission</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Deep research systems iterate through multi-step web research, analysis, and cross-source synthesis, yet
+              their evaluation remains challenging due to the need for annotation-intensive task construction and static
+              evaluation dimensions.
+            </p>
+            <p>
+              We present <span class="dnerf">DeepResearchEval</span>, an automated framework consisting of: (1) a
+              <strong>persona-driven task construction pipeline</strong> that generates realistic research tasks
+              anchored in diverse user profiles and applies a two-stage filter (Task Qualification and Search
+              Necessity), (2) an <strong>adaptive point-wise quality evaluation</strong> framework that dynamically
+              derives task-specific evaluation dimensions and criteria, and (3) an <strong>active fact-checking
+                agent</strong> that proactively retrieves external evidence to verify report statements even when
+              citations are missing.
+            </p>
+            <p>
+              <strong>Key Results:</strong> Gemini 2.5 Pro achieves the highest quality score (8.51), while Manus
+              demonstrate superior factual accuracy (82.30%). Our framework provides a scalable, automated, and
+              interpretable baseline for monitoring and evaluating deep research systems.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="content has-text-centered">
+          <div style="margin-top: 2rem;">
+            <img src="./static/images/compare.png" alt="Domain Distribution" style="max-width: 800px; width: 100%;">
+            <p class="is-size-7" style="margin-top: 0.5rem; color: #666;">Overview of deep research systems' performance
+              on our benchmark across Quality and Factual Correctness</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Methodology Overview. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Methodology</h2>
+
+          <div class="content has-text-justified">
+            <h3 class="title is-4">Task Generation Pipeline</h3>
+            <ul>
+              <li>Generate diverse <strong>personas</strong> conditioned on specific domains</li>
+              <li>Construct candidate tasks requiring <strong>multi-round search</strong> and <strong>cross-source
+                  synthesis</strong></li>
+              <li>Apply a <strong>two-stage filter</strong> (Task Qualification and Search Necessity) to ensure deep
+                research requirements</li>
+              <li><strong>Result:</strong> 100 high-quality tasks validated by domain experts, enabling dynamic "live"
+                benchmarking</li>
+            </ul>
+            <div class="has-text-centered" style="margin: 1.5rem 0;">
+              <img src="./static/images/task_pipelie.jpg" alt="Task Generation Pipeline"
+                style="max-width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+            </div>
+
+            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
+
+            <h3 class="title is-4">Agentic Evaluation</h3>
+            <p>Our evaluation framework consists of two core components designed to assess both the creative quality and
+              the factual grounding of deep research reports.</p>
+
+            <div class="has-text-centered" style="margin: 1.5rem 0;">
+              <img src="./static/images/methodv5.png" alt="Evaluation Pipeline"
+                style="max-width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 10px;">
+            </div>
+            <h4 class="title is-5" style="margin-top: 1.5rem;">Adaptive Point-wise Quality Evaluation</h4>
+            <ul>
+              <li>Combines fixed <strong>general dimensions</strong> with automatically generated <strong>task-specific
+                  dimensions</strong></li>
+              <li>Assigns <strong>normalized weights</strong> to all dimensions based on task requirements</li>
+              <li><strong>Hierarchical scoring</strong> aggregates criterion-level scores into a final quality metric
+              </li>
+              <li>Provides <strong>interpretable, fine-grained scoring</strong> tailored to each research challenge</li>
+            </ul>
+
+            <h4 class="title is-5" style="margin-top: 1.5rem;">Fact-Checking Agent</h4>
+            <ul>
+              <li><strong>Independent of citations</strong>, actively invokes <strong>MCP tools</strong> to retrieve
+                external evidence
+              </li>
+              <li><strong>Segments reports</strong> into manageable parts for <strong>parallel verification</strong>
+              </li>
+              <li>Fact-checking agents extract <strong>verifiable statements</strong> (numbers, events, dates, etc.) to
+                check</li>
+              <li>Labels each statement as <em>Right</em>, <em>Wrong</em>, or <em>Unknown</em> with detailed
+                <strong>reasoning and urls</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--/ Methodology Overview. -->
+    </div>
+  </section>
+
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered">Evaluation Results</h2>
+        <div class="content">
+          <div class="columns">
+            <div class="column">
+              <h3 class="title is-4">Overall Quality Scores</h3>
+              <div style="overflow-x: auto;">
+                <table class="table is-striped is-fullwidth" style="font-size: 0.9rem;">
+                  <thead>
+                    <tr>
+                      <th>Model</th>
+                      <th>Avg</th>
+                      <th>Covera.</th>
+                      <th>Insight</th>
+                      <th>Instr.</th>
+                      <th>Clarity</th>
+                      <th>Task.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background-color: #e8f5e9;">
+                      <td><strong>Gemini-2.5-Pro DR</strong></td>
+                      <td><strong>8.51</strong></td>
+                      <td><strong>9.2</strong></td>
+                      <td><strong>9.0</strong></td>
+                      <td><strong>9.7</strong></td>
+                      <td><strong>9.1</strong></td>
+                      <td><strong>8.0</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Claude-Sonnet-4.5 DR</td>
+                      <td>7.53</td>
+                      <td>8.8</td>
+                      <td>8.0</td>
+                      <td>9.2</td>
+                      <td>7.8</td>
+                      <td>6.8</td>
+                    </tr>
+                    <tr>
+                      <td>OpenAI Deep Research</td>
+                      <td>7.28</td>
+                      <td>8.6</td>
+                      <td>7.3</td>
+                      <td>9.0</td>
+                      <td>7.6</td>
+                      <td>6.7</td>
+                    </tr>
+                    <tr>
+                      <td>Qwen-3-235B DR</td>
+                      <td>7.17</td>
+                      <td>8.0</td>
+                      <td>7.9</td>
+                      <td>8.7</td>
+                      <td>8.3</td>
+                      <td>6.6</td>
+                    </tr>
+                    <tr>
+                      <td>Doubao DR</td>
+                      <td>7.06</td>
+                      <td>8.6</td>
+                      <td>7.0</td>
+                      <td>9.2</td>
+                      <td>7.7</td>
+                      <td>6.3</td>
+                    </tr>
+                    <tr>
+                      <td>Grok4 DR</td>
+                      <td>6.92</td>
+                      <td>8.5</td>
+                      <td>6.6</td>
+                      <td>9.6</td>
+                      <td>8.2</td>
+                      <td>6.0</td>
+                    </tr>
+                    <tr>
+                      <td>Perplexity DR</td>
+                      <td>6.86</td>
+                      <td>8.2</td>
+                      <td>6.6</td>
+                      <td>9.3</td>
+                      <td>8.6</td>
+                      <td>5.9</td>
+                    </tr>
+                    <tr>
+                      <td>Manus</td>
+                      <td>5.95</td>
+                      <td>7.2</td>
+                      <td>5.8</td>
+                      <td>8.3</td>
+                      <td>7.1</td>
+                      <td>5.2</td>
+                    </tr>
+                    <tr>
+                      <td>DeepSeek DR</td>
+                      <td>5.25</td>
+                      <td>5.9</td>
+                      <td>5.2</td>
+                      <td>7.2</td>
+                      <td>8.4</td>
+                      <td>4.3</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="column">
+              <h3 class="title is-4">Factual Accuracy</h3>
+              <div style="overflow-x: auto;">
+                <table class="table is-striped is-fullwidth" style="font-size: 0.9rem;">
+                  <thead>
+                    <tr>
+                      <th>Model</th>
+                      <th>Statements</th>
+                      <th>Right</th>
+                      <th>Wrong</th>
+                      <th>Unknown</th>
+                      <th>Ratio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background-color: #e8f5e9;">
+                      <td><strong>Manus</strong></td>
+                      <td>57.90</td>
+                      <td>47.65</td>
+                      <td>2.23</td>
+                      <td>8.02</td>
+                      <td><strong>82.30%</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Gemini-2.5-Pro DR</td>
+                      <td><strong>86.99</strong></td>
+                      <td>66.65</td>
+                      <td>4.16</td>
+                      <td>16.18</td>
+                      <td>76.62%</td>
+                    </tr>
+                    <tr>
+                      <td>DeepSeek DR</td>
+                      <td>25.08</td>
+                      <td>19.17</td>
+                      <td>1.81</td>
+                      <td>4.10</td>
+                      <td>76.44%</td>
+                    </tr>
+                    <tr>
+                      <td>OpenAI Deep Research</td>
+                      <td>45.98</td>
+                      <td>35.04</td>
+                      <td>2.72</td>
+                      <td>8.22</td>
+                      <td>76.21%</td>
+                    </tr>
+                    <tr>
+                      <td>Qwen-3-235B DR</td>
+                      <td>37.45</td>
+                      <td>27.11</td>
+                      <td>3.36</td>
+                      <td>6.34</td>
+                      <td>72.39%</td>
+                    </tr>
+                    <tr>
+                      <td>Doubao DR</td>
+                      <td>80.75</td>
+                      <td>56.12</td>
+                      <td>7.43</td>
+                      <td>17.20</td>
+                      <td>69.50%</td>
+                    </tr>
+                    <tr>
+                      <td>Grok4 DR</td>
+                      <td>47.16</td>
+                      <td>29.15</td>
+                      <td>5.44</td>
+                      <td>12.57</td>
+                      <td>61.81%</td>
+                    </tr>
+                    <tr>
+                      <td>Claude-Sonnet-4.5 DR</td>
+                      <td>57.30</td>
+                      <td>34.79</td>
+                      <td>6.16</td>
+                      <td>16.35</td>
+                      <td>60.72%</td>
+                    </tr>
+                    <tr>
+                      <td>Perplexity DR</td>
+                      <td>61.34</td>
+                      <td>36.16</td>
+                      <td>9.08</td>
+                      <td>16.10</td>
+                      <td>58.94%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+        <!-- Key Findings. -->
+        <div class="column">
+          <div class="content">
+            <h2 class="title is-3">Key Findings</h2>
+            <p>
+              <strong>Quality:</strong> Gemini 2.5 Pro leads with an 8.51 average score, excelling across all general
+              dimensions. Task-specific scores remain lower across all systems, highlighting the difficulty of
+              optimizing for adaptive research criteria.
+            </p>
+            <p>
+              <strong>Factual Accuracy:</strong> Manus achieves the highest correctness ratio (82.30%). Factual risks
+              are primarily driven by weakly grounded or insufficiently verifiable claims rather than outright factual
+              errors.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{wang2026deepresearchevalautomatedframeworkdeep,
+      title={DeepResearchEval: An Automated Framework for Deep Research Task Construction and Agentic Evaluation}, 
+      author={Yibo Wang and Lei Wang and Yue Deng and Keming Wu and Yao Xiao and Huanjin Yao and Liwei Kang and Hai Ye and Yongcheng Jing and Lidong Bing},
+      year={2026},
+      eprint={2601.09688},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2601.09688}, 
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+              Please remember to remove the analytics code included in the header of the website if you use this
+              template.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
